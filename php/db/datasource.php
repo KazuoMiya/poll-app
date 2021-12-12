@@ -7,7 +7,7 @@ class DataSource {
 
     private $conn;
     private $sqlResult;
-    private Const CLS = 'cls';
+    public Const CLS = 'cls';
 
     public function __construct($host = 'localhost', $port = '8889', $dbName = 'pollapp', $username = 'test', $userpassword = 'test'){
         $dsn = "mysql:host={$host};port={$port};dbname={$dbName}";
