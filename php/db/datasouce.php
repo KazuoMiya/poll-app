@@ -7,6 +7,7 @@ class DataSource {
 
     private $conn;
     private $sqlResult;
+    private Const CLS = 'cls';
 
     public function __construct($host = 'localhost', $port = '8889', $dbName = 'pollapp', $username = 'test', $userpassword = 'test'){
         $dsn = "mysql:host={$host};port={$port};dbname={$dbName}";
@@ -15,9 +16,14 @@ class DataSource {
         $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     }
-    public function select($sql = '', $params = []){
+    public function select($sql = '', $params = [], $type = '', $cls = ''){
         $stmt = $this->executeSql($sql, $params);
-        return $stmt->fetchAll();
+        if ($type === DataSource::CLS) {
+            return $stmt->fetchAll(PDO::FETCH_CLASS, $cls);
+        } else {
+            return $stmt->fetchAll();
+        }
+        
     }
 
     public function execute($sql = '', $params = []){
@@ -25,8 +31,8 @@ class DataSource {
         return $this->sqlResult;
     }
 
-    public function selectOne($sql, $params){
-        $result =  $this->select($sql, $params);
+    public function selectOne($sql, $params, $type = '', $cls = ''){
+        $result =  $this->select($sql, $params, $type, $cls);
         return count($result) > 0 ? $result[0] : false;
     }
 
