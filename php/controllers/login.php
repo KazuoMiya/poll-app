@@ -1,10 +1,18 @@
 <?php 
 namespace controller\login;
+use lib\Auth;
 
 function get() {
     require_once SOURCE_BASE . 'views/login.php';
 }
 
 function post() {
-    echo 'post methodを受け取りました。';
+    $id = get_param('id', '');
+    $pwd = get_param('pwd', '');
+
+    if (Auth::login($id, $pwd)) {
+        echo 'Succsessful!';
+    } else {
+        echo 'Fail.';
+    }
 }

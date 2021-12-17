@@ -1,1 +1,2 @@
-<h1>404</h1>
+<h1>404<?php echo $_SERVER['REQUEST_URI']; ?></h1>
+

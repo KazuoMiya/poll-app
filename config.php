@@ -1,6 +1,6 @@
 <?php 
 define('URI', $_SERVER['REQUEST_URI']);
-if(preg_match("/(.+(start|end))/i", URI, $match)) {
+if(preg_match("/(.+(pollapp))/i", URI, $match)) {
     define('BASE_CONTEXT_PATH', $match[0] . '/');
 }
 define('BASE_IMAGE_PATH', BASE_CONTEXT_PATH . 'images/');
