@@ -1,4 +1,5 @@
 <?php
+
 require_once 'config.php';
 
 require_once SOURCE_BASE . 'libs/helper.php';
@@ -18,11 +19,18 @@ use function lib\route;
 
 session_start();
 
-require_once SOURCE_BASE . 'partials/header.php';
+try {
 
-$rpath = str_replace(BASE_CONTEXT_PATH, '', $_SERVER['REQUEST_URI']);
-$method = strtolower($_SERVER['REQUEST_METHOD']);
+    require_once SOURCE_BASE . 'partials/header.php';
 
-route($rpath, $method);
+    $rpath = str_replace(BASE_CONTEXT_PATH, '', $_SERVER['REQUEST_URI']);
+    $method = strtolower($_SERVER['REQUEST_METHOD']);
 
-require_once SOURCE_BASE . 'partials/footer.php';
+    route($rpath, $method);
+
+    require_once SOURCE_BASE . 'partials/footer.php';
+} catch (\Throwable $e) {
+
+    die('<h1>何かが凄くおかしいようです。</h1>');
+    
+}
