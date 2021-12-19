@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,4 +8,17 @@
     <title>Poll for everyone</title>
     <!-- <link rel="stylesheet" href="<?php echo BASE_CSS_PATH ?>sample.css"> -->
 </head>
+
 <body>
+    <?php
+
+    use lib\Auth;
+    use lib\Message;
+
+    Message::flush();
+
+    if (Auth::isLogin()) {
+        echo 'status: login.';
+    } else {
+        echo 'status: not login.';
+    }
