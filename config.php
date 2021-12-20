@@ -9,3 +9,4 @@ define('BASE_CSS_PATH', BASE_CONTEXT_PATH . 'css/');
 define('SOURCE_BASE', __DIR__ . '/php/');
 define('GO_HOME', 'home');
 define('GO_REFERER', 'referer');
+define('DEBUG', true);

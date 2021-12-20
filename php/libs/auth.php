@@ -4,7 +4,6 @@ namespace lib;
 
 use db\UserQuery;
 use model\UserModel;
-
 use Throwable;
 
 class Auth
@@ -12,6 +11,11 @@ class Auth
     public static function login($id, $pwd)
     {
         try {
+            if (!(UserModel::validateId($id)
+                * UserModel::validatePwd($pwd)
+            )) {
+                return false;
+            }
             $is_succsess = false;
             $user = UserQuery::fetchById($id);
 
@@ -20,10 +24,10 @@ class Auth
                     $is_succsess = true;
                     UserModel::setSession($user);
                 } else {
-                    echo 'Password Error!<br>';
+                    Message::Push(Message::ERROR, 'Password Error!<br>');
                 }
             } else {
-                echo 'User not exist!';
+                Message::Push(Message::ERROR, 'User not exist!');
             }
         } catch (Throwable $e) {
             $is_succsess = false;
@@ -37,11 +41,16 @@ class Auth
     public static function regist($user)
     {
         try {
+            if (!($user->isValidId()
+                * $user->isValidPwd()
+                * $user->isValidNickname())) {
+                return false;
+            }
             $is_succsess = false;
             $exist_user = UserQuery::fetchById($user->id);
 
             if (!empty($exist_user)) {
-                echo 'User exist!';
+                Message::Push(Message::INFO, 'User exist!');
                 return false;
             }
 
@@ -63,7 +72,7 @@ class Auth
         try {
             $user = UserModel::getSession();
         } catch (Throwable $e) {
-            $user = UserModel::clearSession();
+            UserModel::clearSession();
             Message::Push(Message::DEBUG, $e->getMessage());
             Message::Push(Message::ERROR, 'An error has occurred. Try again.');
             return false;
@@ -74,5 +83,15 @@ class Auth
         } else {
             return false;
         }
+    }
+
+    public static function logout(){
+        try {
+            UserModel::clearSession();
+        } catch (Throwable $e) {
+            Message::Push(Message::DEBUG, $e->getMessage());
+            return false;
+        }
+        return true;
     }
 }

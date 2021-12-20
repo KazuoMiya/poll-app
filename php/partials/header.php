@@ -17,8 +17,8 @@
 
     Message::flush();
 
-    if (Auth::isLogin()) {
-        echo 'status: login.';
-    } else {
-        echo 'status: not login.';
-    }
+    // if (Auth::isLogin()) {
+    //     echo 'status: login.';
+    // } else {
+    //     echo 'status: not login.';
+    // }

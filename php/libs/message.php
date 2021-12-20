@@ -29,10 +29,11 @@ class Message extends AbstractModel
             $msgs_with_type = static::getSessionAndclearSession() ?? [];
 
             foreach ($msgs_with_type as $type => $msgs) {
-                if ($type === Message::DEBUG && !false) {
-                    'Debug Message!!';
+                if ($type === static::DEBUG && !DEBUG) {
+                    continue;
                 }
                 foreach ($msgs as $msg) {
+                    // Message::Push(Message::INFO, "<div>{$type}:{$msg}</div>");
                     echo "<div>{$type}:{$msg}</div>";
                 }
             }

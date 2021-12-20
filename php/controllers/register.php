@@ -19,10 +19,9 @@ function post()
     $user->nickname = get_param('nickname', '');
 
     if (Auth::regist($user)) {
-        Message::Push(Message::INFO, 'Succsessful!');
+        Message::Push(Message::INFO, "Succsessful!Welcom {$user->nickname}!");
         redirect(GO_HOME);
     } else {
-        Message::Push(Message::INFO, 'Fail!');
         redirect(GO_REFERER);
     }
 }
